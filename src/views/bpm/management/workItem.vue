@@ -1,4 +1,4 @@
-<template> 
+<template>
     <div style="padding: 0px 0px 8px 8px">
       <el-card shadow="never" :body-style="{ paddingBottom: '0' }" style="margin-top: 8px">
         <el-form :model="state.filterModel" :inline="true">
@@ -10,22 +10,22 @@
           </el-form-item>
         </el-form>
       </el-card>
-  
+
       <el-card shadow="never" style="margin-top: 8px">
         <el-table v-loading="state.loading" :data="state.listData" row-key="id" style="width: 100%" border>
-           
+
         <el-table-column type="index" width="60"  label="序号"  />
           <el-table-column prop="activityName" label="工作项名称" min-width="120" show-overflow-tooltip >
             <template #default="{ row }">
           <el-link  @click="open(row)">{{ row.activityName }}</el-link>
           </template>
-            </el-table-column>  
+            </el-table-column>
             <el-table-column prop="referenceNo" label="单号" show-overflow-tooltip width="120" />
           <el-table-column prop="instanceName" label="流程名称" show-overflow-tooltip width="120" />
           <el-table-column prop="state" label="工作项状态" width="100">
-            <template #default="{ row }">  
-              <el-tag disable-transitions :type="vnDisplayType[row.state&127].toLowerCase()">{{ vnActivityState[row.state] }}</el-tag> 
-              
+            <template #default="{ row }">
+              <el-tag disable-transitions :type="vnDisplayType[row.state&127].toLowerCase()">{{ vnActivityState[row.state] }}</el-tag>
+
             </template>
           </el-table-column>
           <el-table-column prop="initiator" label="创建人"   show-overflow-tooltip  width="120"/>
@@ -34,11 +34,11 @@
           <el-table-column prop="startTime" label="创建时间" :formatter="formatterTime" width="180" />
           <el-table-column label="操作" width="180" fixed="right" header-align="center" align="center">
             <template #default="{ row }">
-           
-              
+
+
               <el-button
-              
-             
+
+
               icon="ele-CaretRight"
               size="small"
               text
@@ -66,17 +66,17 @@
         </div>
       </el-card>
     </div>
-    
+
  <my-form  ref="formRef"></my-form>
   </template>
-  
+
   <script lang="ts" setup>
   import { ref, reactive, onMounted, getCurrentInstance, defineAsyncComponent } from 'vue'
-  import { ResultOutputWorkItemGetPageOutput, PageInputWorkItemGetPageDto,vnActivityState, vnDisplayType } from '/@/api/bpm/data-contracts'
+  import { WorkItemGetPageOutput, PageInputWorkItemGetPageDto,vnActivityState, vnDisplayType } from '/@/api/bpm/data-contracts'
   import { WorkItemApi } from '/@/api/bpm/WorkItem'
   import dayjs from 'dayjs'
   const MyForm = defineAsyncComponent(() => import('./myForm.vue'))
-  
+
   const props= defineProps({
     state: {
       type: String,
@@ -95,7 +95,7 @@
   // 引入组件
   const { proxy } = getCurrentInstance() as any
 
-   
+
   const state = reactive({
     loading: false,
     filterModel: {
@@ -110,7 +110,7 @@
     Name:''}
     } as PageInputWorkItemGetPageDto,
     listData: [] as Array<ResultOutputWorkItemGetPageOutput>,
-    
+
   })
   onMounted(() => {
     onQuery()
@@ -157,12 +157,12 @@
     onQuery()
   }
   </script>
-  
+
   <script lang="ts">
-  import { defineComponent } from 'vue' 
+  import { defineComponent } from 'vue'
   export default defineComponent({
     name: 'bpm/template',
   })
   </script>
-  
+
   <style scoped lang="scss"></style>
